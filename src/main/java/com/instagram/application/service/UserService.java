@@ -1,12 +1,16 @@
 package com.instagram.application.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.instagram.application.dto.UserDto;
+import com.instagram.application.exceptions.ResourceAlreadyExistsException;
 import com.instagram.application.repositories.UserRepository;
 
 import java.util.Collections;
@@ -17,13 +21,14 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
+    private final PasswordEncoder passwordEncoder;
+    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder) {
        this.userRepository = userRepository;
+       this.passwordEncoder = passwordEncoder;
     }
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        var userFromDb = userRepository.findByUsername(s)
+        var userFromDb = userRepository.findByEmail(s)
                 .orElseThrow(() -> new UsernameNotFoundException("No user found with this email address."));
         
         List<GrantedAuthority> authorities = new java.util.ArrayList<>(Collections.emptyList());
@@ -32,26 +37,34 @@ public class UserService implements UserDetailsService {
 
         return new User(userFromDb.getUsername(), userFromDb.getPassword(), authorities);
     }
-//    public void addUser(UserDto userDto) {
-//        if (userRepository.findByUsername(userDto.getUsername()).isEmpty()) {
+//    @Override
+//    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+//        var userFromDb = userRepository.findByUsername(s)
+//                .orElseThrow(() -> new UsernameNotFoundException("No user found with this email address."));
+//        
+//        List<GrantedAuthority> authorities = new java.util.ArrayList<>(Collections.emptyList());
+//        
+//        authorities.add((GrantedAuthority) () -> userFromDb.getRole().name());
 //
-//            var userEntity = new com.spring5.practice.model.User();
-//            BeanUtils.copyProperties(userDto, userEntity);
-//            userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
-//
-//            Set<Authority> authorities = new HashSet<Authority>();
-//            for (var authorityName : userDto.getAuthorityNames()) {
-//                var authority = authorityService.findByRoleName(authorityName);
-//                authorities.add(authority);
-//            }
-//            userEntity.setAuthorities(authorities);
-//
-//            userRepository.save(userEntity);
-//
-//        } else {
-//            throw new ResourceAlreadyExistsException("Username is unavailable");
-//        }
+//        return new User(userFromDb.getUsername(), userFromDb.getPassword(), authorities);
 //    }
+    public void addUser(UserDto userDto) {
+        if (userRepository.findByUsername(userDto.getEmail()).isEmpty()) {
+
+            var userEntity = new com.instagram.application.model.User();
+            BeanUtils.copyProperties(userDto, userEntity);
+            userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+            List<GrantedAuthority> authorities = new java.util.ArrayList<>(Collections.emptyList());
+            
+            authorities.add((GrantedAuthority) () -> userDto.getRole().name());
+
+            userRepository.save(userEntity);
+
+        } else {
+            throw new ResourceAlreadyExistsException("email is unavailable...");
+        }
+    }
 //
 //    public void deleteUser(Long userId) {
 //        userRepository.deleteById(userId); 
@@ -62,6 +75,7 @@ public class UserService implements UserDetailsService {
   public Optional<com.instagram.application.model.User> getUserByUserId(Long id) {
 	  return userRepository.findById(id); 
   }
+
     
     
 }

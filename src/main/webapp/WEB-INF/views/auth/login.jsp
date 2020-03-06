@@ -15,21 +15,9 @@
 	<!-- Main Styles CSS -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/main.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/css/fonts.min.css">
-<%--     <link rel="stylesheet"
-          href="${pageContext.request.contextPath }/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath }/css/login.css">
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath }/js/jquery.js"></script> --%>
+
 </head>
-<style>
-.landing-page .content-bg-wrap {       
-    -webkit-animation: sidedownscroll 30s linear infinite;
-    animation: sidedownscroll 30s linear infinite;
-}
-</style>
+
 <body class="landing-page">
 
 
@@ -45,12 +33,12 @@
 
 			<a href="#" class="logo">
 				<div class="img-wrap">
-					<img src="${pageContext.request.contextPath }/img/logo.png" alt="Olympus">
-					<img src="${pageContext.request.contextPath }/img/logo-colored-small.png" alt="Olympus" class="logo-colored">
+					<img style="width: 40px;" src="${pageContext.request.contextPath }/img/logo.png" alt="Instragram">
+					
 				</div>
 				<div class="title-block">
-					<h6 class="logo-title">Cricbean</h6>
-					<div class="sub-title">SPORTS NETWORK</div>
+					<h6 class="logo-title">Instagram</h6>
+					<div class="sub-title">SOCIAL NETWORK</div>
 				</div>
 			</a>
 
@@ -66,9 +54,9 @@
 	<div class="row display-flex">
 		<div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
 			<div class="landing-content">
-				<h1>Welcome to the Biggest Sports Network in the Bangladesh</h1>
+				<h1>Welcome to the Biggest Social  Network in the Bangladesh</h1>
 				<p>We are the best and biggest social network with 5 billion active users all around the country. Share you
-					thoughts, write blog posts, show your favourite music via Stopify, earn badges and much more!
+					thoughts, write  posts, follow  your favourit  persons, share photos and much more!
 				</p>
 				<!-- <a href="#" class="btn btn-md btn-border c-white">Register Now!</a> -->
 			</div>
@@ -100,11 +88,13 @@
 								method="POST">
 								<div class="row">
 									<div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-										<div class="form-group label-floating is-empty">
+										<div class="form-group label-floating">
 											<label class="control-label">Your Email</label> <input
-												class="form-control" placeholder="" type="text"
+												class="form-control" placeholder="" type="email"
 												name="username">
-										</div>
+										</div>									
+										
+										
 										<div class="form-group label-floating is-empty">
 											<label class="control-label">Your Password</label> <input
 												class="form-control" placeholder="" type="password"
@@ -112,7 +102,7 @@
 										</div>
 										<c:if test="${error == 'true'}">
 											<div class="alert alert-danger" role="alert">Wrong
-												username or password</div>
+												email or password</div>
 										</c:if>
 										<button type="submit"
 											class="btn btn-lg btn-primary full-width">Login</button>
@@ -135,42 +125,15 @@
 <script src="${pageContext.request.contextPath }/js/jquery.mousewheel.js"></script>
 <script src="${pageContext.request.contextPath }/js/perfect-scrollbar.js"></script>
 <script src="${pageContext.request.contextPath }/js/Headroom.js"></script>
-<%-- <script src="${pageContext.request.contextPath }/js/jquery.matchHeight.js"></script>
-<script src="${pageContext.request.contextPath }/js/svgxuse.js"></script>
-<script src="${pageContext.request.contextPath }/js/imagesloaded.pkgd.js"></script>
 
-<script src="${pageContext.request.contextPath }/js/velocity.js"></script>
-<script src="${pageContext.request.contextPath }/js/ScrollMagic.js"></script>
-<script src="${pageContext.request.contextPath }/js/jquery.waypoints.js"></script>
-<script src="${pageContext.request.contextPath }/js/jquery.countTo.js"></script>
-<script src="${pageContext.request.contextPath }/js/popper.min.js"></script>
- --%>
  <script src="${pageContext.request.contextPath }/js/material.min.js"></script>
 <script src="${pageContext.request.contextPath }/js/bootstrap-select.js"></script>
 <script src="${pageContext.request.contextPath }/js/smooth-scroll.js"></script>
 
-<%-- <script src="${pageContext.request.contextPath }/js/selectize.js"></script>
-<script src="${pageContext.request.contextPath }/js/swiper.jquery.js"></script>
-<script src="${pageContext.request.contextPath }/js/moment.js"></script>
-<script src="${pageContext.request.contextPath }/js/daterangepicker.js"></script>
-<script src="${pageContext.request.contextPath }/js/simplecalendar.js"></script>
-<script src="${pageContext.request.contextPath }/js/fullcalendar.js"></script>
-<script src="${pageContext.request.contextPath }/js/isotope.pkgd.js"></script>
-<script src="${pageContext.request.contextPath }/js/ajax-pagination.js"></script>
- --%>
- <%-- <script src="${pageContext.request.contextPath }/js/Chart.js"></script>
-<script src="${pageContext.request.contextPath }/js/chartjs-plugin-deferred.js"></script>
-<script src="${pageContext.request.contextPath }/js/circle-progress.js"></script>
-<script src="${pageContext.request.contextPath }/js/loader.js"></script>
-<script src="${pageContext.request.contextPath }/js/run-chart.js"></script>
-<script src="${pageContext.request.contextPath }/js/jquery.magnific-popup.js"></script>
-<script src="${pageContext.request.contextPath }/js/jquery.gifplayer.js"></script>
-<script src="${pageContext.request.contextPath }/js/mediaelement-and-player.js"></script>
-<script src="${pageContext.request.contextPath }/js/mediaelement-playlist-plugin.min.js"></script> --%>
 <script src="${pageContext.request.contextPath }/js/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath }/js/base-init.js"></script>
 <script defer src="${pageContext.request.contextPath }/fonts/fontawesome-all.js"></script>
-
+ <script src="${pageContext.request.contextPath }/js/selectize.js"></script>
  <script src="${pageContext.request.contextPath }/css/Bootstrap/dist/js/bootstrap.bundle.js"></script>
 
 

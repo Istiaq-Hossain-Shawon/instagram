@@ -15,6 +15,20 @@ public class UserDto {
 	private String name;
 	private String password;
 	private String confirmPassword;
+	private String email;
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	private String logo;
+public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
 private com.instagram.application.enums.Role role;
 	
  

@@ -21,7 +21,7 @@
 	</div>
 	
 	<div class="header-content-wrapper">
-		<img src="${pageContext.request.contextPath }/img/cricbean_logo.png" alt="Cricbean" style='    height: 70px;'>
+		<img src="${pageContext.request.contextPath }/img/cricbean_logo.png" alt="Instagram" style='    height: 70px;'>
 			
 		
 		<div class="control-block">

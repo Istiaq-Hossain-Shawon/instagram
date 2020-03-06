@@ -45,7 +45,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 						
 			.antMatchers("/register/index").permitAll()
-			.antMatchers("/register/add").permitAll()
+			.antMatchers("/register/new").permitAll()
 			
 			
 			

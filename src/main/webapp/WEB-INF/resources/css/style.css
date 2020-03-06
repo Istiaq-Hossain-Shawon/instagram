@@ -1,0 +1,13 @@
+.header-background{
+	background: linear-gradient(120deg, #BA3694, #5983e8) !Important;
+	
+}
+.padding-t80{
+	padding-top:80px;
+}
+.name{
+	color:#0056b3;
+}
+.card-img-top{
+	    max-height: 180px;
+}

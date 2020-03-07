@@ -21,9 +21,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.instagram.application.dto.PostCommentDto;
 import com.instagram.application.dto.PostDto;
 import com.instagram.application.model.Post;
+import com.instagram.application.model.PostComment;
 import com.instagram.application.model.PostImage;
+import com.instagram.application.repositories.PostCommentRepository;
 import com.instagram.application.repositories.PostImageRepository;
 import com.instagram.application.repositories.PostRepository;
 import com.instagram.application.repositories.UserRepository;
@@ -42,6 +45,11 @@ public class PostService {
 	private UserRepository userRepository;
 	@Autowired
 	private PostImageRepository postImageRepository;
+	
+	@Autowired
+	private PostCommentRepository postCommentRepository;
+	
+	
 
 	public void insert(PostDto postdto) {
 		Post post = new Post();
@@ -52,13 +60,25 @@ public class PostService {
 		postRepository.save(post);
 		for (var temp : postdto.getImageDto()) {				
 			postImageRepository.save(new PostImage(temp.getImageName(), new Date(), post));
-		}		
+		}
 
 	}
+	public void insertComment(PostCommentDto postCmnDto) {
+		var post=postRepository.findById(postCmnDto.getPostId()).get();
+		var user=userRepository.findById(postCmnDto.getUserId()).get();
+		PostComment postcomnt=new PostComment();
+		postcomnt.setCcPost(post);
+		postcomnt.setEntryDate(new Date());
+		postcomnt.setCcUser(user);
+		postcomnt.setCommentContent(postCmnDto.getCommentContent());
+		postCommentRepository.save(postcomnt);
+
+	}
+	
 	public Page<Post> getAll(String searchText,int pageIndex,int rows,String sort) {
 		Pageable pageWithElements;
 		if(sort.equals("PDA")) {			
-			pageWithElements = PageRequest.of(pageIndex, rows,Sort.by("postDate").ascending());
+			pageWithElements = PageRequest.of(pageIndex, rows,Sort.by("postDate").descending());
 		}else {			
 			pageWithElements = PageRequest.of(pageIndex, rows,Sort.by("postDate").descending());	
 		}		

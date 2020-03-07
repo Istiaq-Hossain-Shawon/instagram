@@ -34,8 +34,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.instagram.application.dto.ImageDto;
+import com.instagram.application.dto.PostCommentDto;
 import com.instagram.application.dto.PostDto;
 import com.instagram.application.model.Post;
+import com.instagram.application.model.PostComment;
 import com.instagram.application.model.PostImage;
 import com.instagram.application.repositories.PostRepository;
 import com.instagram.application.service.PostService;
@@ -59,6 +61,27 @@ public class PostController {
 		model.addAttribute("post", new PostDto());		
 		return "post/add";
 	}
+	
+	@PostMapping("/post/addComment")
+	public String addComment(@ModelAttribute(name = "PostCommentDto") PostCommentDto postCommentDto, Model model) {
+		
+		
+		var username="";
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			  username = ((UserDetails)principal).getUsername();
+			} else {
+			  username = principal.toString();
+		}	
+		
+		var data=userService.getUserByUserName(username).get();
+		postCommentDto.setUserId(data.getId());
+		
+		postService.insertComment(postCommentDto);
+		model.addAttribute("message", "post added successfully");
+		return "redirect:/?_search=&_pageIndex=0&_rows=5&_sort=NA";
+	}	
+	
 	@PostMapping("/post/add")
 	public String add(@ModelAttribute(name = "post") PostDto post, Model model) {
 		

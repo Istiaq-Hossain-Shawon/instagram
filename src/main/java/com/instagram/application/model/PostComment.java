@@ -21,7 +21,20 @@ public class PostComment implements Serializable {
     private Post ccPost;   
 
 
+    
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "userId", nullable = false)
+    private User ccUser; 
+    
+    
+    
 	
+	public User getCcUser() {
+		return ccUser;
+	}
+	public void setCcUser(User ccUser) {
+		this.ccUser = ccUser;
+	}
 	@Column(name = "commentContent")
     private String commentContent;
 	

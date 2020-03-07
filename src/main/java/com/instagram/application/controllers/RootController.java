@@ -1,6 +1,7 @@
 package com.instagram.application.controllers;
 
 import com.instagram.application.dto.ImageDto;
+import com.instagram.application.dto.PostCommentDto;
 import com.instagram.application.dto.PostDto;
 import com.instagram.application.enums.Role;
 import com.instagram.application.model.Post;
@@ -58,6 +59,17 @@ public class RootController {
 		model.addAttribute("posts", data.getContent());
 		model.addAttribute("totalPages",data.getTotalPages());
 		model.addAttribute("pageIndex",0);
+		model.addAttribute("PostCommentDto",new PostCommentDto());
+		
+		var username="";
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			  username = ((UserDetails)principal).getUsername();
+			} else {
+			  username = principal.toString();
+		}	
+		model.addAttribute("loginUser",userService.getUserByUserName(username).get());	
+		
 		return "index";
 	}	
 
@@ -79,6 +91,17 @@ public class RootController {
 		model.addAttribute("posts", data.getContent());
 		model.addAttribute("totalPages",data.getTotalPages());
 		model.addAttribute("pageIndex",pageIndex);
+model.addAttribute("PostCommentDto",new PostCommentDto());
+		
+		var username="";
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			  username = ((UserDetails)principal).getUsername();
+			} else {
+			  username = principal.toString();
+		}	
+		model.addAttribute("loginUser",userService.getUserByUserName(username).get());	
+		
 		return "index";
 	}
 	@GetMapping("/account/index")

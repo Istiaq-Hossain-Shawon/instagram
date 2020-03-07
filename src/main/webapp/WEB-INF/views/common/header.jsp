@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>Cricbean</title>
+    <title>Instagram</title>
 
 
 </head>
@@ -21,13 +21,20 @@
 	</div>
 	
 	<div class="header-content-wrapper">
-		<img src="${pageContext.request.contextPath }/img/cricbean_logo.png" alt="Instagram" style='    height: 70px;'>
-			
+		<a href="${pageContext.request.contextPath }/">
+		<img src="${pageContext.request.contextPath }/img/logo.png" alt="Instagram" style=' padding-top:10px;   width: 40px;'>
+		</a>
+		
+		
+		<%-- <a href="${pageContext.request.contextPath}/post/add" class="link-find-friend">
+		<img src="${pageContext.request.contextPath }/img/add.png" alt="Instagram" style='    width: 40px;'> --%>
+		<!-- <span style="color:#BA3694">Create Post </span></a> -->
 		
 		<div class="control-block">
 			<div class="author-page author vcard inline-items more">
 				<div class="author-thumb">
 					<img alt="author" src="${pageContext.request.contextPath }/img/user.png" class="avatar" style='width: 50px;'>
+					
 					<span class="icon-status online"></span>
 					<div class="more-dropdown more-with-triangle">
 						<div class="mCustomScrollbar" data-mcs-theme="dark">
@@ -36,10 +43,10 @@
 							</div>
 							<ul class="account-settings">								
 								<li>
-									<a href="${pageContext.request.contextPath}/team/add">
+									<a href="${pageContext.request.contextPath}/account/index">
 										<svg class="olymp-star-icon left-menu-icon"  data-toggle="tooltip" data-placement="right"   data-original-title="FAV PAGE"><use xlink:href="svg-icons/sprites/icons.svg#olymp-star-icon"></use></svg>
 
-										<span>Create Team</span>
+										<span>Account</span>
 									</a>
 								</li>
 								<li>								 

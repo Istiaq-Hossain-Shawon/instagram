@@ -58,6 +58,7 @@
 				<p>We are the best and biggest social network with 5 billion active users all around the country. Share you
 					thoughts, write  posts, follow  your favourit  persons, share photos and much more!
 				</p>
+				<a href="${pageContext.request.contextPath }/register/index" class="btn btn-md btn-border c-white">Register Now!</a>
 				<!-- <a href="#" class="btn btn-md btn-border c-white">Register Now!</a> -->
 			</div>
 		</div>

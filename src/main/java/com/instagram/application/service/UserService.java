@@ -49,7 +49,10 @@ public class UserService implements UserDetailsService {
 //        return new User(userFromDb.getUsername(), userFromDb.getPassword(), authorities);
 //    }
     public void addUser(UserDto userDto) {
-        if (userRepository.findByUsername(userDto.getEmail()).isEmpty()) {
+    	 if (!userRepository.findByUsername(userDto.getUsername()).isEmpty()) {
+         	throw new ResourceAlreadyExistsException("user name is unavailable...");
+         }
+        if (userRepository.findByEmail(userDto.getEmail()).isEmpty()) {
 
             var userEntity = new com.instagram.application.model.User();
             BeanUtils.copyProperties(userDto, userEntity);
@@ -64,6 +67,8 @@ public class UserService implements UserDetailsService {
         } else {
             throw new ResourceAlreadyExistsException("email is unavailable...");
         }
+       
+        
     }
 //
 //    public void deleteUser(Long userId) {
@@ -74,6 +79,8 @@ public class UserService implements UserDetailsService {
   }
   public Optional<com.instagram.application.model.User> getUserByUserId(Long id) {
 	  return userRepository.findById(id); 
+  } public Optional<com.instagram.application.model.User> getUserByUserName(String username) {
+	  return userRepository.findByUsername(username); 
   }
 
     

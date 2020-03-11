@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -63,7 +65,8 @@ public class PostController {
 	}
 	
 	@PostMapping("/post/addComment")
-	public String addComment(@ModelAttribute(name = "PostCommentDto") PostCommentDto postCommentDto, Model model) {
+	@ResponseBody
+	public PostCommentDto addComment(@ModelAttribute(name = "PostCommentDto") PostCommentDto postCommentDto, Model model) {
 		
 		
 		var username="";
@@ -76,10 +79,11 @@ public class PostController {
 		
 		var data=userService.getUserByUserName(username).get();
 		postCommentDto.setUserId(data.getId());
-		
-		postService.insertComment(postCommentDto);
-		model.addAttribute("message", "post added successfully");
-		return "redirect:/?_search=&_pageIndex=0&_rows=5&_sort=NA";
+		var postcomment =postService.insertComment(postCommentDto);
+		BeanUtils.copyProperties(postcomment, postCommentDto);
+		return postCommentDto;
+//		model.addAttribute("message", "post added successfully");
+//		return "redirect:/?_search=&_pageIndex=0&_rows=5&_sort=NA";
 	}	
 	
 	@PostMapping("/post/add")

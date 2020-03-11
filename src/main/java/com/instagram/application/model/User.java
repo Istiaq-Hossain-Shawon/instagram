@@ -41,8 +41,10 @@ public class User implements Serializable {
 	
 	@OneToMany(mappedBy = "ccUser", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
-    private Set<PostComment> postComment;
-    
+    private Set<PostComment> postComment;    
+	
+	
+
 	
 	
     public Set<Post> getPosts() {

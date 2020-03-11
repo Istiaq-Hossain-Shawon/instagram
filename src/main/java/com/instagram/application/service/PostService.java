@@ -63,7 +63,7 @@ public class PostService {
 		}
 
 	}
-	public void insertComment(PostCommentDto postCmnDto) {
+	public PostComment insertComment(PostCommentDto postCmnDto) {
 		var post=postRepository.findById(postCmnDto.getPostId()).get();
 		var user=userRepository.findById(postCmnDto.getUserId()).get();
 		PostComment postcomnt=new PostComment();
@@ -72,6 +72,7 @@ public class PostService {
 		postcomnt.setCcUser(user);
 		postcomnt.setCommentContent(postCmnDto.getCommentContent());
 		postCommentRepository.save(postcomnt);
+		return postcomnt; 
 
 	}
 	

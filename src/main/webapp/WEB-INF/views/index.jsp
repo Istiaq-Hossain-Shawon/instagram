@@ -28,9 +28,7 @@
 
 				<c:forEach items="${posts}" var="post">
 					<div class="ui-block">
-
 						<!-- Post -->
-
 						<article class="hentry post">
 
 							<div class="post__author author vcard inline-items">
@@ -158,12 +156,8 @@
 
 
 						</article>
-
-
-
 						<!-- ... end Post -->
 						<!-- Comments -->
-
 						<ul class="comments-list">
 
 							<c:forEach items="${post.postComment}" var="comment">
@@ -211,25 +205,19 @@
 
 
 						</ul>
-
 						<!-- ... end Comments -->
-
-
-
 						<!-- Comment Form  -->
-						<form:form class="comment-form inline-items"
-							action="${pageContext.request.contextPath }/post/addComment"
-							modelAttribute="PostCommentDto">
+						<div class="comment-form inline-items">
 
 
-							<div class="post__author author vcard inline-items">
+							<div class="post__author author vcard inline-items post " data-post-id="${post.postId}">
 
 								<img
 									src="${pageContext.request.contextPath }/img/${loginUser.logo}"
 									alt="author"> <input type="hidden" name="postId"
 									value="${post.postId}">
 								<div class="form-group with-icon-right ">
-									<textarea name="commentContent" class="form-control"
+									<textarea name="commentContent" class="form-control comment-box"
 										placeholder=""></textarea>
 									<div class="add-options-message">
 										<a href="#" class="options-message" data-toggle="modal"
@@ -243,23 +231,17 @@
 								</div>
 							</div>
 
-							<button type="submit" class="btn btn-md-2 btn-primary">Post
-								Comment</button>
+							<div  class="btn btn-md-2 btn-primary comment-btn" >Post
+								Comment</div>
 
-							<button
-								class="btn btn-md-2 btn-border-think c-grey btn-transparent custom-color">Cancel</button>
+							<div
+								class="btn btn-md-2 btn-border-think c-grey btn-transparent custom-color">Cancel</div>
 
-						</form:form>
+						</div>
 
 
 					</div>
 				</c:forEach>
-
-
-
-
-
-
 
 			</div>
 
@@ -394,6 +376,28 @@
 
 <!-- GLOBAL FOOTER -->
 <jsp:include page="common/footer.jsp" />
+<script>
+	$(".comment-btn").on("click", function () {
+		var parent = $(this).closest(".comment-form");
+		var commentVal = parent.find(".comment-box").val();
+		var postId = parent.find(".post").data("postId");
+		var data = {
+			"postId" : postId,
+			"commentContent" : commentVal
+		};		
+		var url = '${pageContext.request.contextPath }/post/addComment';
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : data,
+			success : function (resp) {
+				debugger;
+				console.log(resp);
+			},
+			dataType : 'application/json'
+		});
+	})
+</script>
 
 
 

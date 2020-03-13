@@ -15,7 +15,14 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private long userId;
-    @Column(name = "username")
+    public Set<PostComment> getPostComment() {
+		return postComment;
+	}
+	public void setPostComment(Set<PostComment> postComment) {
+		this.postComment = postComment;
+	}
+
+	@Column(name = "username")
     private String username;
     @Column(name = "Name")
     private String Name;   

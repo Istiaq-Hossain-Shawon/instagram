@@ -19,6 +19,7 @@ import com.instagram.application.model.PostImage;
 public interface PostImageRepository extends JpaRepository<PostImage, Long>{
 	
 	Optional<PostImage> findByImageId(long imageId);	
+	
 	//List<PostImage> findByImgPost(Post imgPost);		
 	
 }

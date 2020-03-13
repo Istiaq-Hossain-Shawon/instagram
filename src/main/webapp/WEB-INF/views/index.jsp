@@ -105,8 +105,6 @@
 											alt="photo"></a>
 									</c:forEach>
 								</c:if>
-
-
 						<%-- 		<c:forEach items="${post.postImage}" var="image">
 
 
@@ -119,11 +117,6 @@
 
 
 								</c:forEach --%>
-
-
-
-
-
 
 							</div>
 
@@ -141,13 +134,12 @@
 											<use
 												xlink:href="svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
 										<span>0</span>
-									</a> <a href="#" class="post-add-icon inline-items"> <img
+									</a> 
+									<a onclick="callLike(${post.postId})" class="post-add-icon inline-items"> 
+									<img
 										class="olymp-menu-icon left-menu-icon"
 										src="${pageContext.request.contextPath }/img/icon-chat26.png" />
-
-
-
-										<span>16</span>
+										<span id="${post.postId}" >16</span>
 									</a>
 								</div>
 
@@ -397,6 +389,29 @@
 			dataType : 'application/json'
 		});
 	})
+	function callLike(postId) {
+		console.log(postId);
+		debugger;
+		var data = {
+				"postId" : postId				
+			};
+		
+		$.ajax({
+			type : "POST",
+			url : "${pageContext.request.contextPath }/post/addLike",
+			data : data,
+			success : function (resp) {
+				debugger;
+				console.log(resp);
+				var data=$('#'+postId+' span').text();
+				console.log(parseInt(data));
+				$('#'+postId+' span').html(parseInt(data)+1);
+				
+			},
+			dataType : 'application/json'
+		});	
+		
+	}
 </script>
 
 

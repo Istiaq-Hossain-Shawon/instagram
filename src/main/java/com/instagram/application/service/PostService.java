@@ -23,11 +23,15 @@ import org.springframework.stereotype.Service;
 
 import com.instagram.application.dto.PostCommentDto;
 import com.instagram.application.dto.PostDto;
+import com.instagram.application.dto.PostLikeDto;
+import com.instagram.application.exceptions.ResourceAlreadyExistsException;
 import com.instagram.application.model.Post;
 import com.instagram.application.model.PostComment;
 import com.instagram.application.model.PostImage;
+import com.instagram.application.model.PostLike;
 import com.instagram.application.repositories.PostCommentRepository;
 import com.instagram.application.repositories.PostImageRepository;
+import com.instagram.application.repositories.PostLikeRepository;
 import com.instagram.application.repositories.PostRepository;
 import com.instagram.application.repositories.UserRepository;
 import com.instagram.application.util.Constants;
@@ -49,7 +53,8 @@ public class PostService {
 	@Autowired
 	private PostCommentRepository postCommentRepository;
 	
-	
+	@Autowired
+	private PostLikeRepository postLikeRepository;
 
 	public void insert(PostDto postdto) {
 		Post post = new Post();
@@ -75,6 +80,29 @@ public class PostService {
 		return postcomnt; 
 
 	}
+	public PostLike insertLike(PostLikeDto postLikeDto) {
+		var postLikeData=postLikeRepository.GetDataByPostIdAndUserId(postLikeDto.getPostId(),postLikeDto.getLikeBy());
+		if(postLikeData.isEmpty()) {
+			var post=postRepository.findById(postLikeDto.getPostId()).get();
+			var user=userRepository.findById(postLikeDto.getLikeBy()).get();
+			PostLike postLike=new PostLike();
+			postLike.setLikePost(post);
+			postLike.setEntryDate(new Date());
+			postLike.setUsrLike(user);		
+			postLikeRepository.save(postLike);
+			return postLike;
+		}
+		return new PostLike();
+		 
+	}
+	public void removeLike(PostLikeDto postLikeDto) {		
+		var postLike=postLikeRepository.findById(postLikeDto.getLikeId()).get();			
+		postLikeRepository.delete(postLike);		 
+	}
+	public void removeComment(PostCommentDto postCommentDto) {		
+		var postComment=postCommentRepository.findById(postCommentDto.getCommentId()).get();			
+		postCommentRepository.delete(postComment);		 
+	}
 	
 	public Page<Post> getAll(String searchText,int pageIndex,int rows,String sort) {
 		Pageable pageWithElements;
@@ -83,7 +111,7 @@ public class PostService {
 		}else {			
 			pageWithElements = PageRequest.of(pageIndex, rows,Sort.by("postDate").descending());	
 		}		
-		Page<Post> teams=postRepository.findByPostContentContaining(searchText,pageWithElements);		
+		Page<Post> teams=postRepository.fullTextSearch(searchText,pageWithElements);		
 		return teams;
 	}
 

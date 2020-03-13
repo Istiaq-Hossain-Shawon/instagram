@@ -22,6 +22,12 @@ public class PostImage implements Serializable {
     
 
 	
+	public Post getImgPost() {
+		return imgPost;
+	}
+	public void setImgPost(Post imgPost) {
+		this.imgPost = imgPost;
+	}
 	public long getImageId() {
 		return imageId;
 	}

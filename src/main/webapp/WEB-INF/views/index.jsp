@@ -133,13 +133,15 @@
 											class="olymp-speech-balloon-icon">
 											<use
 												xlink:href="svg-icons/sprites/icons.svg#olymp-speech-balloon-icon"></use></svg>
-										<span>0</span>
+										
 									</a> 
-									<a onclick="callLike(${post.postId})" class="post-add-icon inline-items"> 
+									<a style="cursor:pointer" onclick="callLike(${post.postId})" class="post-add-icon inline-items"> 
 									<img
 										class="olymp-menu-icon left-menu-icon"
 										src="${pageContext.request.contextPath }/img/icon-chat26.png" />
-										<span id="${post.postId}" >16</span>
+										<span id="${post.postId}" >
+										${fn:length(post.postLike)} 										
+										</span>
 									</a>
 								</div>
 
@@ -435,11 +437,11 @@
 			url : "${pageContext.request.contextPath }/post/addLike",
 			data : data,			
 			success : function (resp) {
-				debugger;
-				console.log(resp);
-				var data=$('#'+postId+' span').text();
-				console.log(parseInt(data));
-				$('#'+postId+' span').html(parseInt(data)+1);
+				debugger;	
+				if(resp.likeId!=0){
+					var id='#'+postId+'';					
+					$(id).text(parseInt($(id).text())+1);	
+				}		
 				
 			},
 			error: function (req, status, err) {

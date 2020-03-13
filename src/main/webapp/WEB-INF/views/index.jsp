@@ -399,7 +399,7 @@
 		$.ajax({
 			type : "POST",
 			url : "${pageContext.request.contextPath }/post/addLike",
-			data : data,
+			data : data,			
 			success : function (resp) {
 				debugger;
 				console.log(resp);
@@ -408,7 +408,10 @@
 				$('#'+postId+' span').html(parseInt(data)+1);
 				
 			},
-			dataType : 'application/json'
+			error: function (req, status, err) {
+		        console.log('Something went wrong', status, err);
+		    },
+			dataType : 'json'
 		});	
 		
 	}

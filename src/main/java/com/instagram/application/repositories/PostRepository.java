@@ -14,7 +14,7 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 	
 	Optional<Post> findByPostId(long postId);	
 	
-	@Query(value ="SELECT pst.* FROM tbl_post pst LEFT JOIN tbl_user usr ON pst.userId = usr.id where pst.postContent like %:text% or usr.Name like %:text%  "
+	@Query(value ="SELECT pst.* FROM tbl_post pst LEFT JOIN tbl_user usr ON pst.userId = usr.id where pst.postContent like %:text% or usr.Name like %:text% or usr.username like %:text%  or usr.email like %:text% "
 			,nativeQuery = true)
 	Page<Post> fullTextSearch(@Param("text") String text,Pageable pageable);	
 	

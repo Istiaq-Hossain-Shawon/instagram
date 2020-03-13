@@ -31,6 +31,7 @@ import com.instagram.application.dto.ImageDto;
 import com.instagram.application.dto.PostCommentDto;
 import com.instagram.application.dto.PostDto;
 import com.instagram.application.dto.PostLikeDto;
+import com.instagram.application.model.Post;
 import com.instagram.application.model.PostComment;
 import com.instagram.application.model.PostLike;
 import com.instagram.application.service.PostService;
@@ -161,5 +162,12 @@ public class PostController {
 		postService.insert(post);
 		model.addAttribute("message", "post added successfully");
 		return "redirect:/?_search=&_pageIndex=0&_rows=5&_sort=NA";
+	}	
+	
+
+	@PostMapping("/post/search")
+	public String search(@ModelAttribute(name = "PostDto") PostDto postDto, Model model) {		
+				
+		return "redirect:/?_search="+postDto.getPostContent()+"&_pageIndex=0&_rows=5&_sort=NA";
 	}	
 }

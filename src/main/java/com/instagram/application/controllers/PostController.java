@@ -55,29 +55,47 @@ public class PostController {
 		return "post/add";
 	}
 	
+//	@PostMapping("/post/addComment")	
+//	public String addComment(@ModelAttribute(name = "PostCommentDto") PostCommentDto postCommentDto, Model model) {
+//		
+//		
+//		String username="";
+//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		if (principal instanceof UserDetails) {
+//			  username = ((UserDetails)principal).getUsername();
+//			} else {
+//			  username = principal.toString();
+//		}		
+//		User data=userService.getUserByUserName(username).get();
+//		postCommentDto.setUserId(data.getId());
+//		PostComment postcomment =postService.insertComment(postCommentDto);
+//		BeanUtils.copyProperties(postcomment, postCommentDto);
+//		//return new Gson().toJson(postCommentDto);
+//		
+//		model.addAttribute("message", "post added successfully");
+//		return "redirect:/?_search=&_pageIndex=0&_rows=5&_sort=NA";
+//	}	
+	
+
 	@PostMapping("/post/addComment")
-	@ResponseBody
 	public String addComment(@ModelAttribute(name = "PostCommentDto") PostCommentDto postCommentDto, Model model) {
 		
 		
-		String username="";
+		var username="";
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
 			  username = ((UserDetails)principal).getUsername();
 			} else {
 			  username = principal.toString();
-		}		
-		User data=userService.getUserByUserName(username).get();
-		postCommentDto.setUserId(data.getId());
-		PostComment postcomment =postService.insertComment(postCommentDto);
-		BeanUtils.copyProperties(postcomment, postCommentDto);
-		return new Gson().toJson(postCommentDto);
+		}	
 		
-//		model.addAttribute("message", "post added successfully");
-//		return "redirect:/?_search=&_pageIndex=0&_rows=5&_sort=NA";
+		var data=userService.getUserByUserName(username).get();
+		postCommentDto.setUserId(data.getId());
+		
+		postService.insertComment(postCommentDto);
+		model.addAttribute("message", "post added successfully");
+		return "redirect:/?_search=&_pageIndex=0&_rows=5&_sort=NA";
 	}	
-	
-	
 	
 	
 	

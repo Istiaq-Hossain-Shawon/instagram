@@ -199,7 +199,7 @@
 						</ul>
 						<!-- ... end Comments -->
 						<!-- Comment Form  -->
-						<div class="comment-form inline-items">
+					<%-- 	<div class="comment-form inline-items">
 
 
 							<div class="post__author author vcard inline-items post " data-post-id="${post.postId}">
@@ -231,7 +231,41 @@
 
 						</div>
 
+ --%>
+ <!-- Comment Form  -->
+						<form:form class="comment-form inline-items"
+							action="${pageContext.request.contextPath }/post/addComment"
+							modelAttribute="PostCommentDto">
 
+
+							<div class="post__author author vcard inline-items">
+
+								<img
+									src="${pageContext.request.contextPath }/img/${loginUser.logo}"
+									alt="author"> <input type="hidden" name="postId"
+									value="${post.postId}">
+								<div class="form-group with-icon-right ">
+									<textarea name="commentContent" class="form-control"
+										placeholder=""></textarea>
+									<div class="add-options-message">
+										<a href="#" class="options-message" data-toggle="modal"
+											data-target="#update-header-photo"> <svg
+												class="olymp-camera-icon">
+											<use
+													xlink:href="svg-icons/sprites/icons.svg#olymp-camera-icon"></use>
+										</svg>
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<button type="submit" class="btn btn-md-2 btn-primary">Post
+								Comment</button>
+
+							<button
+								class="btn btn-md-2 btn-border-think c-grey btn-transparent custom-color">Cancel</button>
+
+						</form:form>
 					</div>
 				</c:forEach>
 
@@ -369,7 +403,7 @@
 <!-- GLOBAL FOOTER -->
 <jsp:include page="common/footer.jsp" />
 <script>
-	$(".comment-btn").on("click", function () {
+/* 	$(".comment-btn").on("click", function () {
 		var parent = $(this).closest(".comment-form");
 		var commentVal = parent.find(".comment-box").val();
 		var postId = parent.find(".post").data("postId");
@@ -388,7 +422,7 @@
 			},
 			dataType : 'application/json'
 		});
-	})
+	}) */
 	function callLike(postId) {
 		console.log(postId);
 		debugger;

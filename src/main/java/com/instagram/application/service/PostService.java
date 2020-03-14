@@ -68,6 +68,15 @@ public class PostService {
 		}
 
 	}
+	public void update(PostDto postdto) {
+		Post post =postRepository.findById(postdto.getPostId()).get();		
+		post.setPostContent(postdto.getPostContent());		
+		postRepository.save(post);
+		for (var temp : postdto.getImageDto()) {				
+			postImageRepository.save(new PostImage(temp.getImageName(), new Date(), post));
+		}
+
+	}
 	public PostComment insertComment(PostCommentDto postCmnDto) {
 		var post=postRepository.findById(postCmnDto.getPostId()).get();
 		var user=userRepository.findById(postCmnDto.getUserId()).get();
@@ -113,6 +122,16 @@ public class PostService {
 		}		
 		Page<Post> teams=postRepository.fullTextSearch(searchText,pageWithElements);		
 		return teams;
+	}
+	public Post getPostById(long id) {				
+		Optional<Post> post=postRepository.findById(id);		
+		return post.get();
+	}
+	public void deleteByImageId(long imageId) {	
+		
+		//team.getMembers().removeIf(p->p.getUserId()==playerId);
+		PostImage postImage=postImageRepository.findByImageId(imageId).get();
+		postImageRepository.delete(postImage);		
 	}
 
 }

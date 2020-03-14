@@ -55,6 +55,12 @@ public class PostController {
 		model.addAttribute("post", new PostDto());		
 		return "post/add";
 	}
+	@GetMapping("/post/edit")
+	public String editPost(Model model, @RequestParam("id") long id) {
+		var data =postService.getPostById(id);	
+		model.addAttribute("post", data);	
+		return "post/edit";
+	}
 	
 //	@PostMapping("/post/addComment")	
 //	public String addComment(@ModelAttribute(name = "PostCommentDto") PostCommentDto postCommentDto, Model model) {
@@ -170,4 +176,42 @@ public class PostController {
 				
 		return "redirect:/?_search="+postDto.getPostContent()+"&_pageIndex=0&_rows=5&_sort=NA";
 	}	
+	@GetMapping("/post/deleteImage")
+	public String deletePostImageByImageId(Model model, @RequestParam("postId") long postId, @RequestParam("imageId") long imageId) {
+		postService.deleteByImageId(imageId);
+		model.addAttribute("message", "image deleted successfully");
+		return "redirect:/post/edit?id="+postId;
+	}
+	@PostMapping("/post/update")
+	public String updatePost(@ModelAttribute(name = "post") PostDto post, Model model) {
+		
+		if (post.getPostContent() == null || post.getPostContent().trim().isEmpty()) {
+			throw new RuntimeException("Please give post content");
+		}
+		if (post.getPostContent() == null || post.getPostContent().trim().isEmpty()) {
+			throw new RuntimeException("Please give team  type");
+		}	
+		
+		try {
+			List<ImageDto> images= new ArrayList<ImageDto>();
+			for (var temp : post.getImages()) {
+				ImageDto  imgDto= new ImageDto();
+				byte[] bytes = temp.getBytes();
+				String absoluteFilePath = context.getRealPath(Constants.UPLOADED_FOLDER);
+				var fileName = System.currentTimeMillis() + temp.getOriginalFilename();
+				Path path = Paths.get(absoluteFilePath + fileName);
+				Files.write(path, bytes);
+				imgDto.setImageName(fileName);
+				imgDto.setImage(temp);	
+				images.add(imgDto);
+			}			
+			post.setImageDto(images);
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage());
+		}		
+		postService.update(post);
+		model.addAttribute("message", "post added successfully");
+		return "redirect:/post/edit?id="+post.getPostId();
+	}	
+	
 }

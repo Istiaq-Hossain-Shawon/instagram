@@ -58,7 +58,7 @@
 											alt="author">
 							</svg>
 									<ul class="more-dropdown">
-										<li><a href="#">Edit Post</a></li>
+										<li><a href="${pageContext.request.contextPath }/post/edit?id=${post.postId}">Edit Post</a></li>
 										<li><a href="#">Delete Post</a></li>
 										<li><a href="#">Turn Off Notifications</a></li>
 										<li><a href="#">Select as Featured</a></li>
